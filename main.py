@@ -1,21 +1,29 @@
-#pip install pyTelegramBotAPI
-#export BOT_TOKEN=your-bot-token-here
+# pip install pyTelegramBotAPI
+# export BOT_TOKEN=your-bot-token-here
+# export CHAT_ID=your-chat-id
 
 import os
 
 import telebot
-
+from datetime import date ,time
 from utils import get_daily_horoscope
 
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
+CHAT_ID = os.environ.get('CHAT_ID')
 
 bot = telebot.TeleBot(BOT_TOKEN)
-
+ 
 
 @bot.message_handler(commands=['start', 'hello'])
 def send_welcome(message):
-    bot.reply_to(message, "Howdy, how are you doing?")
+    bot.reply_to(message, "This bot for backuping database \n For this action send /send_backup command")
 
+
+@bot.message_handler(commands=['send_backup'])
+def send_backup(message):
+    bot.send_message(CHAT_ID,f'database backup at {date.today()}')
+    doc = open('output.txt', 'rb')
+    bot.send_document(CHAT_ID, doc)
 
 @bot.message_handler(commands=['horoscope'])
 def sign_handler(message):
@@ -37,9 +45,10 @@ def fetch_horoscope(message, sign):
     day = message.text
     horoscope = get_daily_horoscope(sign, day)
     data = horoscope["data"]
-    horoscope_message = f'*Horoscope:* {data["horoscope_data"]}\n*Sign:* {sign}\n*Day:* {data["date"]}'
-    bot.send_message(message.chat.id, "Here's your horoscope!")
-    bot.send_message(message.chat.id, horoscope_message, parse_mode="Markdown")
+    horoscope_message = f'*Horoscope:* {message.chat.id} {data["horoscope_data"]}\n*Sign:* {sign}\n*Day:* {data["date"]}'
+    bot.send_message(message.chat.id,  "Here's your horoscope!")
+    bot.send_message(message.chat.id,
+                     horoscope_message, parse_mode="Markdown")
 
 
 @bot.message_handler(func=lambda msg: True)
