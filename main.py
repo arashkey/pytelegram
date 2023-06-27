@@ -2,18 +2,21 @@
 # in linux
 # export BOT_TOKEN=your-bot-token-here
 # export CHAT_ID=your-chat-id
+# export DB_BAK_LOCATION=/location/of/file.bak
 # in windows
 # set BOT_TOKEN=your-bot-token-here
 # set CHAT_ID=your-chat-id
+# set DB_BAK_LOCATION=//c/dbbackup/db_backup_file.bak
 
 import os
 
 import telebot
-from datetime import date ,time
+from datetime import date 
 from utils import get_daily_horoscope
 
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 CHAT_ID = os.environ.get('CHAT_ID')
+DB_BAK_LOCATION = os.environ.get('DB_BAK_LOCATION')
 
 bot = telebot.TeleBot(BOT_TOKEN)
  
@@ -26,7 +29,7 @@ def send_welcome(message):
 @bot.message_handler(commands=['send_backup'])
 def send_backup(message):
     bot.send_message(CHAT_ID,f'database backup at {date.today()}')
-    doc = open('output.txt', 'rb')
+    doc = open(DB_BAK_LOCATION, 'rb')
     bot.send_document(CHAT_ID, doc)
 
 @bot.message_handler(commands=['horoscope'])
