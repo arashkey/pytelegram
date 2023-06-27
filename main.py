@@ -6,7 +6,7 @@
 # in windows
 # set BOT_TOKEN=your-bot-token-here
 # set CHAT_ID=your-chat-id
-# set DB_BAK_LOCATION=//c/dbbackup/db_backup_file.bak
+# set DB_BAK_LOCATION=c:\dbbackup\db_backup_file.bak
 
 import os
 
