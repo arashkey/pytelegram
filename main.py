@@ -1,6 +1,10 @@
 # pip install pyTelegramBotAPI
+# in linux
 # export BOT_TOKEN=your-bot-token-here
 # export CHAT_ID=your-chat-id
+# in windows
+# set BOT_TOKEN=your-bot-token-here
+# set CHAT_ID=your-chat-id
 
 import os
 
